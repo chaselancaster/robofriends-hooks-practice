@@ -14,7 +14,7 @@ function App() {
   // }
 
   const [robots, setRobots] = useState([]);
-  const [searchField, setSearchfield] = useState("");
+  const [searchfield, setSearchfield] = useState("");
 
   // componentDidMount() {
   //   fetch('https://jsonplaceholder.typicode.com/users')
@@ -22,11 +22,18 @@ function App() {
   //     .then(users => {this.setState({ robots: users})});
   // }
 
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((users) => {
+        setRobots(users);
+      });
+  }, []);
+
   const onSearchChange = (event) => {
-    this.setState({ searchfield: event.target.value });
+    setSearchfield(event.target.value);
   };
 
-  const { robots, searchfield } = this.state;
   const filteredRobots = robots.filter((robot) => {
     return robot.name.toLowerCase().includes(searchfield.toLowerCase());
   });
